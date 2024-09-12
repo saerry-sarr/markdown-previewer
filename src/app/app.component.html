@@ -1,11 +1,16 @@
-<h1>Markdown Previewer</h1>
+<h2>Markdown Previewer</h2>
 
-<div class="wrapper">
-  <div class="editing-side">
-
+<form [formGroup]="form">
+  <div class="wrapper">
+    <div class="editing-side">
+      <span class="caption">Write your markdown here</span>
+      <textarea formControlName="editing" rows="10"></textarea>
+    </div>
+    <div class="preview-side">
+      <span class="caption">Here is your preview</span>
+      <textarea formControlName="preview" rows="10"></textarea>
+    </div>
   </div>
-  <div class="preview-side">
+</form>
 
-  </div>
-  <div class="hint-side"></div>
-</div>
+<div class="hint-side"></div>
