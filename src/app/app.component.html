@@ -1,14 +1,21 @@
-<h2>Markdown Previewer</h2>
+<div class="headline">
+  <img width="10%" src="logo.svg" alt="Logo" />
+  <h2>Simple Markdown Previewer</h2>
+</div>
 
 <form [formGroup]="form">
   <div class="wrapper">
     <div class="editing-side">
       <span class="caption">Write your markdown here</span>
-      <textarea formControlName="editing" rows="10"></textarea>
+      <textarea
+        id="editing-textarea"
+        formControlName="editing"
+        rows="10"
+      ></textarea>
     </div>
-    <div class="preview-side">
+    <div class="preview-side" #preview>
       <span class="caption">Here is your preview</span>
-      <textarea formControlName="preview" rows="10"></textarea>
+      <span [innerHTML]="preview"></span>
     </div>
   </div>
 </form>
