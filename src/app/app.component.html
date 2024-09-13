@@ -1,21 +1,37 @@
 <div class="headline">
   <img width="10%" src="logo.svg" alt="Logo" />
-  <h2>Simple Markdown Previewer</h2>
+  <h2 class="h2">Simple Markdown Previewer</h2>
 </div>
 
 <form [formGroup]="form">
   <div class="wrapper">
-    <div class="editing-side">
-      <span class="caption">Write your markdown here</span>
+    <div class="editing-side" id="editingSide">
+      <div class="caption-wrapper">
+        <span class="caption">Write your markdown here</span>
+        <button
+          (click)="scrollToAnchor('previewSide')"
+          class="jump-to-button button button-text"
+        >
+          Jump to Preview
+        </button>
+      </div>
       <textarea
         id="editing-textarea"
         formControlName="editing"
         rows="10"
       ></textarea>
     </div>
-    <div class="preview-side" #previewSide>
+    <div class="preview-side" id="previewSide">
       <span class="caption">Here is your preview</span>
-      <span [innerHTML]="preview"></span>
+      <span class="preview" [innerHTML]="preview"></span>
+      <div class="preview-footer">
+        <button
+          (click)="scrollToAnchor('editingSide')"
+          class="jump-to-button button button-text"
+        >
+          Jump to Editing
+        </button>
+      </div>
     </div>
   </div>
 </form>

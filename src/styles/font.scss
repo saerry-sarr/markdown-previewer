@@ -21,6 +21,7 @@
   font-weight: 500;
   font-size: 58px;
   letter-spacing: -0.5px;
+  margin: 0;
 
   @media screen and (max-width: 480px) {
     font-size: 28px;
@@ -79,7 +80,7 @@
   letter-spacing: 0.25px;
 }
 
-.button {
+.button-text {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 1.25px;

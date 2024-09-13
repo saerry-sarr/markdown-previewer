@@ -1,31 +1,52 @@
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 4rem;
+
+  @media screen and (max-width: 905px) {
+    grid-template-rows: 1fr 1fr;
+    row-gap: 2rem;
+  }
+
+  @media screen and (min-width: 906px) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+  }
 }
 
 .editing-side {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   textarea {
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
     border: 1px solid #44b277;
     border-radius: 20px;
     resize: none;
     padding: 20px;
+    min-height: 70vh;
+  }
+
+  .caption-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 20px;
   }
 }
 
 .preview-side {
-  textarea {
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #44b277;
-    border-radius: 20px;
-    resize: none;
-    padding: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.preview-footer {
+  display: flex;
+  justify-content: end;
+}
+
+.preview {
+  padding: 20px;
+  border: 1px solid black;
+  min-height: 70vh;
 }
 
 .hint-side {
@@ -36,4 +57,25 @@
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.button {
+  border: none;
+  background-color: #44b277;
+  color: whitesmoke;
+  padding: 0.5rem 2rem;
+}
+
+@media screen and (max-width: 905px) {
+  button.jump-to-button {
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+@media screen and (min-width: 906px) {
+  button.jump-to-button {
+    display: none;
+  }
 }

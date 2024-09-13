@@ -33,4 +33,9 @@ export class AppComponent {
       );
     });
   }
+
+  public scrollToAnchor(anchor: string) {
+    const element = document.getElementById(anchor);
+    element?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
 }
