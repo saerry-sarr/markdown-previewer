@@ -1,0 +1,35 @@
+body {
+  --spacing-xxs: 6px;
+  --spacing-xs: 12px;
+  --spacing-s: 18px;
+  --spacing-m: 24px;
+  --spacing-l: 30px;
+  --spacing-xl: 36px;
+  --spacing-xxl: 40px;
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 905px;
+  --breakpoint-lg: 1240px;
+  --breakpoint-xl: 1440px;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: block;
+  font-family: "Cairo", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-color);
+  letter-spacing: 0.5px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--background-color);
+  padding: 2rem;
+}
