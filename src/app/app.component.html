@@ -1,6 +1,24 @@
 <div class="headline">
   <img width="10%" src="logo.svg" alt="Logo" />
   <h2 class="h2">Simple Markdown Previewer</h2>
+  <div class="toggle">
+    <span class="button" (click)="toggle()">Show Hints</span>
+  </div>
+</div>
+
+<div class="shortcut-hint">
+  @if (isMac) {
+  <span
+    >Use ⌘ (Cmd) + ↓ to get to the end of the page and ⌘ (Cmd) + ↑ to
+    get to the top of the page.</span
+  >
+  } @else {
+  <span
+    >Use Ctrl + ↓ to get to the end of the page and Ctrl + ↑ to
+    get to the top of the page.</span
+  >
+
+  }
 </div>
 
 <form [formGroup]="form">
@@ -36,4 +54,11 @@
   </div>
 </form>
 
-<div class="hint-side"></div>
+<div class="hint-side" #hintSide>
+  <div class="pane-toggle" (click)="toggle()">
+    <img src="pane-close.svg" alt="Closing Pane Icon" /><span>
+      Close hints pane</span
+    >
+  </div>
+  <app-hints></app-hints>
+</div>

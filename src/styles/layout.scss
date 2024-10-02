@@ -2,7 +2,6 @@
   display: grid;
 
   @media screen and (max-width: 905px) {
-    grid-template-rows: 1fr 1fr;
     row-gap: 2rem;
   }
 
@@ -49,8 +48,43 @@
   min-height: 70vh;
 }
 
-.hint-side {
+.shortcut-hint {
+  margin: 2rem;
+}
+
+.hint-side:not(.show) {
+  display: none;
+}
+
+.hint-side.show {
+  display: block;
   position: absolute;
+  background-color: #b8ebe1;
+  top: 0;
+  right: 0;
+  padding: 2rem;
+  width: 35%;
+  min-height: 100%;
+  height: auto;
+
+  div:not(.pane-toggle) {
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 20px;
+  }
+
+  div.pane-toggle {
+    color: #44b277;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 
 .headline {
@@ -58,19 +92,61 @@
   align-items: center;
   margin-bottom: 2rem;
   gap: 2rem;
+
+  .h2 {
+    text-wrap: nowrap;
+  }
+
+  .toggle {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+  img {
+    width: 10%;
+  }
 }
 
 .button {
   border: none;
+  border-radius: 20px;
   background-color: #44b277;
   color: whitesmoke;
   padding: 0.5rem 2rem;
+  text-wrap: nowrap;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.accent-text-color {
+  color: #44b277;
+}
+
+.text-center {
+  text-align: center;
+  display: block;
 }
 
 @media screen and (max-width: 905px) {
   button.jump-to-button {
     display: block;
     margin: 10px 0;
+  }
+
+  .headline {
+    flex-direction: column;
+    .h2 {
+      text-wrap: pretty;
+    }
+
+    .toggle {
+      width: unset;
+    }
+
+    img {
+      width: 30%;
+    }
   }
 }
 
