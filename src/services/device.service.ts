@@ -21,10 +21,10 @@ export class DeviceService {
 
   public isMacintosh() {
     console.log('userAgent', navigator.userAgent);
-  return navigator.userAgent.indexOf('Mac') > -1
-}
+    return navigator.userAgent.indexOf('Mac') > -1
+  }
 
-public isWindows() {
-  return navigator.userAgent.indexOf('Win') > -1
-}
+  public isWindows() {
+    return navigator.userAgent.indexOf('Win') > -1
+  }
 }
