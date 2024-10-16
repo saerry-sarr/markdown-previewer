@@ -20,7 +20,6 @@ export class DeviceService {
   }
 
   public isMacintosh() {
-    console.log('userAgent', navigator.userAgent);
     return navigator.userAgent.indexOf('Mac') > -1
   }
 
