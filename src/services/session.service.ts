@@ -15,19 +15,21 @@ export class SessionService {
       const sessionKey = params['sessionKey'];
       if (sessionKey) {
         this.sessionKey = sessionKey;
-        this.initializeSession(sessionKey);
+        this.restoreSession(sessionKey);
+      }
+      if (!location.href.includes('session')) {
+        this.initializeSession(this.sessionKey);
       }
     });
   }
 
   private initializeSession(sessionKey: string): void {
-    console.log(sessionKey);
     if (sessionKey) {
       this.restoreSession(sessionKey);
       return;
     }
     this.sessionKey = this.getSessionKey();
-    console.log('sessionkey', this.sessionKey, sessionKey);
+    this.navigateToActiveSession(this.sessionKey);
     this.saveSession('');
   }
 
@@ -42,14 +44,15 @@ export class SessionService {
       sessionData = localStorage.getItem(this.sessionPrefix + this.sessionKey);
       this.navigateToActiveSession(sessionKey);
     }
-    this.sessionData.next(sessionData ? sessionData : '');
+    this.saveSession(sessionData);
   }
 
   private navigateToActiveSession(sessionKey: string): void {
     this.router.navigate([], { queryParams: { sessionKey } });
   }
 
-  public saveSession(sessionEntries: string): void {
+  public saveSession(sessionEntries: string | null): void {
+    sessionEntries = sessionEntries ? sessionEntries : '';
     localStorage.setItem('session-' + this.sessionKey, sessionEntries);
     this.sessionData.next(sessionEntries);
   }
