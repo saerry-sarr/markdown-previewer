@@ -1,21 +1,20 @@
+import { SessionService } from '../services/session.service';
 import { DeviceService } from './../services/device.service';
 import {
   Component,
   ElementRef,
-  OnInit,
   SecurityContext,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterOutlet } from '@angular/router';
 import { md } from './app.config';
 import { HintsComponent } from '../components/hints/hints.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, HintsComponent],
+  imports: [ReactiveFormsModule, HintsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -29,23 +28,36 @@ export class AppComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly sanitizer: DomSanitizer,
-    private readonly deviceService: DeviceService
+    private readonly deviceService: DeviceService,
+    private readonly sessionService: SessionService
   ) {
     this.form = this.fb.group({
       editing: '',
     });
 
+    this.setUpFormSubscriptions();
+
     md.linkify.set({ fuzzyEmail: false });
+
     this.hintSide?.nativeElement.classList.add('none');
+
+    this.isMac = this.deviceService.isMacintosh();
+  }
+
+  private setUpFormSubscriptions() {
+    this.sessionService.sessionData.subscribe((value) => {
+      if (value && !this.form.get('editing')?.value) {
+        this.form.get('editing')?.setValue(value);
+      }
+    });
 
     this.form.get('editing')?.valueChanges.subscribe((input: string) => {
       this.preview = this.sanitizer.sanitize(
         SecurityContext.HTML,
         md.render(input)
       );
+      this.sessionService.saveSession(input);
     });
-
-    this.isMac = this.deviceService.isMacintosh();
   }
 
   public scrollToAnchor(anchor: string) {

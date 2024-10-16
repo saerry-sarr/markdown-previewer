@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, provideRouter, RouterModule, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
 import highlightJs from 'highlight.js';
@@ -8,7 +8,7 @@ import markdownit from 'markdown-it';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding())
   ],
 };
 
