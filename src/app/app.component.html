@@ -1,7 +1,8 @@
 <div class="headline">
   <img width="10%" src="logo.svg" alt="Logo" />
   <h2 class="h2">Simple Markdown Previewer</h2>
-  <div class="toggle">
+  <div class="button-row">
+    <span class="button" (click)="triggerNewSession()">New Session</span>
     <span class="button" (click)="toggle()">Show Hints</span>
   </div>
 </div>
@@ -54,11 +55,11 @@
   </div>
 </form>
 
-<div class="hint-side" #hintSide>
+<aside class="hint-side" #hintSide>
   <div class="pane-toggle" (click)="toggle()">
     <img src="pane-close.svg" alt="Closing Pane Icon" /><span>
       Close hints pane</span
     >
   </div>
   <app-hints></app-hints>
-</div>
+</aside>

@@ -97,10 +97,12 @@
     text-wrap: nowrap;
   }
 
-  .toggle {
+  .button-row {
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: end;
+    gap: 2rem;
   }
   img {
     width: 10%;
@@ -140,7 +142,7 @@
       text-wrap: pretty;
     }
 
-    .toggle {
+    .button-row {
       width: unset;
     }
 

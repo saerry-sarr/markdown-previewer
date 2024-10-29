@@ -23,7 +23,7 @@ export class SessionService {
     });
   }
 
-  private initializeSession(sessionKey: string): void {
+  private initializeSession(sessionKey: string | undefined): void {
     if (sessionKey) {
       this.restoreSession(sessionKey);
       return;
@@ -45,6 +45,10 @@ export class SessionService {
       this.navigateToActiveSession(sessionKey);
     }
     this.saveSession(sessionData);
+  }
+
+  public newSession() {
+    this.initializeSession(undefined);
   }
 
   private navigateToActiveSession(sessionKey: string): void {

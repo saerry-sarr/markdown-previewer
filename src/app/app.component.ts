@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { md } from './app.config';
 import { HintsComponent } from '../components/hints/hints.component';
+import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -56,7 +57,9 @@ export class AppComponent {
         SecurityContext.HTML,
         md.render(input)
       );
-      this.sessionService.saveSession(input);
+      if (input) {
+        this.sessionService.saveSession(input);
+      }
     });
   }
 
@@ -69,5 +72,10 @@ export class AppComponent {
     const hintSideClassList: DOMTokenList =
       this.hintSide?.nativeElement.classList;
     hintSideClassList.toggle('show');
+  }
+
+  public triggerNewSession() {
+    this.sessionService.newSession();
+    this.form.get('editing')?.setValue('');
   }
 }
