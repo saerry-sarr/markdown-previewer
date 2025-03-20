@@ -6,11 +6,11 @@ import {
   SecurityContext,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { md } from './app.config';
 import { HintsComponent } from '../components/hints/hints.component';
-import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -22,45 +22,27 @@ import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 export class AppComponent {
   @ViewChild('hintSide') public hintSide: ElementRef | undefined;
   public title = 'simple-markdown-previewer';
-  public form: FormGroup;
   public preview: string | null = '';
   public isMac: boolean = false;
+  public sessionList: string[] = [];
+  public selectedIndex = 0;
+
+  public sessionSelect = new FormControl('');
+  public userInput: FormControl = new FormControl('');
 
   constructor(
-    private readonly fb: FormBuilder,
     private readonly sanitizer: DomSanitizer,
     private readonly deviceService: DeviceService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly route: ActivatedRoute
   ) {
-    this.form = this.fb.group({
-      editing: '',
-    });
+    this.subscribeToForm();
+    this.subscribeToSessionSelect();
+    this.subscribeToQueryParams();
 
-    this.setUpFormSubscriptions();
-
-    md.linkify.set({ fuzzyEmail: false });
-
-    this.hintSide?.nativeElement.classList.add('none');
-
-    this.isMac = this.deviceService.isMacintosh();
-  }
-
-  private setUpFormSubscriptions() {
-    this.sessionService.sessionData.subscribe((value) => {
-      if (value && !this.form.get('editing')?.value) {
-        this.form.get('editing')?.setValue(value);
-      }
-    });
-
-    this.form.get('editing')?.valueChanges.subscribe((input: string) => {
-      this.preview = this.sanitizer.sanitize(
-        SecurityContext.HTML,
-        md.render(input)
-      );
-      if (input) {
-        this.sessionService.saveSession(input);
-      }
-    });
+    this.disableEmailToLinkConversion();
+    this.hideHintPanel();
+    this.checkDevice();
   }
 
   public scrollToAnchor(anchor: string) {
@@ -76,6 +58,58 @@ export class AppComponent {
 
   public triggerNewSession() {
     this.sessionService.newSession();
-    this.form.get('editing')?.setValue('');
+    this.clear();
+  }
+
+  public copy(): void {
+    navigator.clipboard.writeText(this.userInput.value);
+  }
+
+  public clear(): void {
+    this.userInput.setValue('');
+  }
+
+  private hideHintPanel(): void {
+    this.hintSide?.nativeElement.classList.add('none');
+  }
+
+  private disableEmailToLinkConversion(): void {
+    md.linkify.set({ fuzzyEmail: false });
+  }
+
+  private checkDevice(): void {
+    this.isMac = this.deviceService.isMacintosh();
+  }
+
+  private subscribeToSessionSelect(): void {
+    this.sessionSelect.valueChanges.subscribe((value) => {
+      if (value) {
+        this.sessionService.restoreSession(value);
+      }
+    });
+  }
+
+  private subscribeToForm(): void {
+    this.userInput.valueChanges.subscribe((input: string) => {
+      this.preview = this.sanitizer.sanitize(
+        SecurityContext.HTML,
+        md.render(input)
+      );
+      this.sessionService.storeSession(input);
+    });
+  }
+
+  private subscribeToQueryParams(): void {
+    this.route.queryParams.subscribe(() => {
+      this.userInput.setValue(this.sessionService.formInput);
+      this.sessionList = this.sessionService.getSessionList();
+      this.selectedIndex = this.getSelectedIndex();
+    });
+  }
+
+  private getSelectedIndex(): number {
+    return this.sessionList.findIndex(
+      (listitem) => this.sessionService.sessionKey === listitem
+    );
   }
 }

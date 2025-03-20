@@ -19,17 +19,9 @@
 
 .h2 {
   font-weight: 500;
-  font-size: 58px;
+  font-size: 6vmin;
   letter-spacing: -0.5px;
   margin: 0;
-
-  @media screen and (max-width: 480px) {
-    font-size: 28px;
-  }
-
-  @media screen and (min-width: 481px) and (max-width: 670px) {
-    font-size: 47px;
-  }
 }
 
 .h3 {

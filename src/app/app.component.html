@@ -1,7 +1,18 @@
 <header class="headline">
-  <img width="10%" src="logo.svg" alt="Logo" />
+  <div class="img-wrapper">
+    <img width="10%" src="logo.svg" alt="Logo" />
+  </div>
   <h2 class="h2">Simple Markdown Previewer</h2>
   <div class="button-row">
+    <select
+      [formControl]="sessionSelect"
+      [selectedIndex]="selectedIndex"
+      id="sessions"
+    >
+      @for (item of sessionList; track $index) {
+      <option [value]="item">Session {{ $index + 1 }}</option>
+      }
+    </select>
     <button class="button button-text" (click)="triggerNewSession()">
       New Session
     </button>
@@ -9,7 +20,7 @@
   </div>
 </header>
 
-<section class="shortcut-hint">
+<section>
   @if (isMac) {
   <p>
     Use <kbd>⌘</kbd> (Cmd) + <kbd>↓</kbd> to get to the end of the page and
@@ -22,27 +33,45 @@
   </p>
 
   }
+  <p>
+    Sessions are only stored in your browser and not processed somewhere else.
+    If you delete your browser cache, all your previous sessions will be gone
+    forever.
+  </p>
 </section>
 
-<form [formGroup]="form" class="wrapper">
+<hr />
+
+<div class="wrapper">
   <section class="editing-side" id="editingSide">
     <div class="caption-wrapper">
       <p>Write your markdown here</p>
-      <button
-        (click)="scrollToAnchor('previewSide')"
-        class="jump-to-button button button-text"
-      >
-        Jump to Preview
-      </button>
+      <div class="button-row">
+        <button class="button button-text" (click)="copy()">
+          Copy Markdown
+        </button>
+        <button class="button button-text" (click)="clear()">
+          Clear Markdown
+        </button>
+        <button
+          (click)="scrollToAnchor('previewSide')"
+          class="jump-to-button button button-text"
+        >
+          Jump to Preview
+        </button>
+      </div>
     </div>
     <textarea
       id="editing-textarea"
-      formControlName="editing"
+      [formControl]="userInput"
       rows="10"
     ></textarea>
   </section>
   <section class="preview-side" id="previewSide">
-    <p>Here is your preview</p>
+    <div class="caption-wrapper">
+      <p>Here is your preview</p>
+    </div>
+
     <span class="preview" [innerHTML]="preview"></span>
     <div class="preview-footer">
       <button
@@ -53,13 +82,11 @@
       </button>
     </div>
   </section>
-</form>
+</div>
 
 <aside class="hint-side" #hintSide>
   <div class="pane-toggle" (click)="toggle()">
-    <img src="pane-close.svg" alt="Closing Pane Icon" /><span>
-      Close hints pane</span
-    >
+    <img src="pane-close.svg" alt="Closing Pane Icon" /><span> Collapse</span>
   </div>
   <app-hints></app-hints>
 </aside>
