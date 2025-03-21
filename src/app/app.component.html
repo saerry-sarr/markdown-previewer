@@ -4,6 +4,7 @@
   </div>
   <h2 class="h2">Simple Markdown Preview</h2>
   <div class="button-row">
+    <label for="sessions"></label>
     <select [formControl]="sessionSelect" id="sessions">
       @for (item of sessionList; track $index) {
       <option [value]="item" [selected]="$index === selectedIndex">
@@ -59,7 +60,7 @@
       </button>
       }
     </div>
-    <span class="clip-to-textarea">Write your markdown here</span>
+    <label for="editing-textarea" class="clip-to-textarea">Write your markdown here</label>
     <textarea
       id="editing-textarea"
       [formControl]="userInput"

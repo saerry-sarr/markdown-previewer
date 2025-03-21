@@ -9,7 +9,7 @@
 .hint-side.show {
   display: block;
   position: fixed;
-  background-color: #b8ebe1;
+  background-color: var(--secondary);
   top: 0;
   right: 0;
   bottom: 0;
@@ -33,7 +33,7 @@
     position: sticky;
     top: 0;
     left: 100%;
-    background-color: #b8ebe1;
+    background-color: var(--secondary);
     padding: 0.75rem 0 0.75rem 0.75rem;
     border-radius: 20px 0 0 20px;
     color: #44b277;

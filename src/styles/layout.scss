@@ -20,7 +20,7 @@
   display: grid;
   grid-auto-flow: row;
   textarea {
-    border: 1px solid #44b277;
+    border: 1px solid var(--primary);
     resize: none;
     padding: 20px;
     min-height: 70vh;
@@ -37,7 +37,7 @@
 .clip-to-textarea {
   padding: 0.5rem 1rem;
   border-radius: 20px 20px 0 0;
-  background-color: #44b277;
+  background-color: var(--primary);
   color: whitesmoke;
 }
 
@@ -58,7 +58,7 @@
     inset 0 10px 10px -12px rgba(0, 0, 0, 0.6);
   box-shadow: 11px 11px 10px -9px rgba(0, 0, 0, 0.6),
     inset 0 10px 10px -12px rgba(0, 0, 0, 0.6);
-  background-color: #fbfbfb;
+  background-color: var(--offwhite);
   min-height: 70vh;
   border-bottom: 2px solid #fff;
 }
@@ -66,7 +66,7 @@
 select {
   padding: 0.5rem 2rem 0.5rem 1rem;
   border-radius: 20px;
-  border-color: #44b277;
+  border-color: var(--primary);
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
@@ -110,7 +110,7 @@ select {
 }
 
 .accent-text-color {
-  color: #44b277;
+  color: var(--primary);
 }
 
 .text-center {
