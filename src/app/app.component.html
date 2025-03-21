@@ -14,7 +14,9 @@
     <button class="button button-text" (click)="triggerNewSession()">
       New Session
     </button>
-    <button class="button button-text" (click)="toggle()">Cheat Sheet</button>
+    <button class="button-secondary button-text" (click)="toggle()">
+      Cheat Sheet
+    </button>
   </div>
 </header>
 
@@ -45,13 +47,13 @@
       <button class="button button-text" (click)="copy()">
         Copy@if(!isMobile) { Markdown}
       </button>
-      <button class="button button-text" (click)="clear()">
+      <button class="button-danger button-text" (click)="clear()">
         Clear@if(!isMobile) { Markdown}
       </button>
       @if (!isMobile) {
       <button
         (click)="scrollToAnchor('previewSide')"
-        class="jump-to-button button button-text"
+        class="jump-to-button button-secondary button-text"
       >
         Jump to Preview
       </button>
@@ -91,7 +93,11 @@
 
 <footer class="button-row">
   @for (item of footerElements; track $index) {
-  <button class="button button-text" (click)="chooseAction($index)">
+  <button
+    class="button-text"
+    [class]="$index !== Actions.coffee ? 'button-secondary' : 'button'"
+    (click)="chooseAction($index)"
+  >
     {{ item }}
   </button>
   }
