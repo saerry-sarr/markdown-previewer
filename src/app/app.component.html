@@ -2,36 +2,33 @@
   <div class="img-wrapper">
     <img width="10%" src="logo.svg" alt="Logo" />
   </div>
-  <h2 class="h2">Simple Markdown Previewer</h2>
+  <h2 class="h2">Simple Markdown Preview</h2>
   <div class="button-row">
-    <select
-      [formControl]="sessionSelect"
-      [selectedIndex]="selectedIndex"
-      id="sessions"
-    >
+    <select [formControl]="sessionSelect" id="sessions">
       @for (item of sessionList; track $index) {
-      <option [value]="item">Session {{ $index + 1 }}</option>
+      <option [value]="item" [selected]="$index === selectedIndex">
+        Session {{ $index + 1 }}
+      </option>
       }
     </select>
     <button class="button button-text" (click)="triggerNewSession()">
       New Session
     </button>
-    <button class="button button-text" (click)="toggle()">Show Hints</button>
+    <button class="button button-text" (click)="toggle()">Cheat Sheet</button>
   </div>
 </header>
 
 <section>
-  @if (isMac) {
+  @if (isMac && !isMobile) {
   <p>
     Use <kbd>⌘</kbd> (Cmd) + <kbd>↓</kbd> to get to the end of the page and
     <kbd>⌘</kbd> (Cmd) + <kbd>↑</kbd> to get to the top of the page.
   </p>
-  } @else {
+  } @if (!isMac && !isMobile) {
   <p>
     Use <kbd>Ctrl</kbd> + <kbd>↓</kbd> to get to the end of the page and
     <kbd>Ctrl</kbd> + <kbd>↑</kbd> to get to the top of the page.
   </p>
-
   }
   <p>
     Sessions are only stored in your browser and not processed somewhere else.
@@ -44,23 +41,23 @@
 
 <div class="wrapper">
   <section class="editing-side" id="editingSide">
-    <div class="caption-wrapper">
-      <p>Write your markdown here</p>
-      <div class="button-row">
-        <button class="button button-text" (click)="copy()">
-          Copy Markdown
-        </button>
-        <button class="button button-text" (click)="clear()">
-          Clear Markdown
-        </button>
-        <button
-          (click)="scrollToAnchor('previewSide')"
-          class="jump-to-button button button-text"
-        >
-          Jump to Preview
-        </button>
-      </div>
+    <div [class]="isMobile ? 'button-row-editing' : 'button-row'">
+      <button class="button button-text" (click)="copy()">
+        Copy@if(!isMobile) { Markdown}
+      </button>
+      <button class="button button-text" (click)="clear()">
+        Clear@if(!isMobile) { Markdown}
+      </button>
+      @if (!isMobile) {
+      <button
+        (click)="scrollToAnchor('previewSide')"
+        class="jump-to-button button button-text"
+      >
+        Jump to Preview
+      </button>
+      }
     </div>
+    <span class="clip-to-textarea">Write your markdown here</span>
     <textarea
       id="editing-textarea"
       [formControl]="userInput"
@@ -68,18 +65,17 @@
     ></textarea>
   </section>
   <section class="preview-side" id="previewSide">
-    <div class="caption-wrapper">
-      <p>Here is your preview</p>
-    </div>
-
+    <span class="clip-to-textarea">Here is your preview</span>
     <span class="preview" [innerHTML]="preview"></span>
     <div class="preview-footer">
+      @if (!isMobile) {
       <button
         (click)="scrollToAnchor('editingSide')"
         class="jump-to-button button button-text"
       >
         Jump to Editing
       </button>
+      }
     </div>
   </section>
 </div>
@@ -90,3 +86,42 @@
   </div>
   <app-hints></app-hints>
 </aside>
+
+<hr />
+
+<footer class="button-row">
+  @for (item of footerElements; track $index) {
+  <button class="button button-text" (click)="chooseAction($index)">
+    {{ item }}
+  </button>
+  }
+</footer>
+
+<dialog #imprintModal>
+  <div class="dialog-headline">
+    <h1>Imprint</h1>
+    <button class="icon-button" (click)="chooseAction(Actions.imprint)">
+      &#10006;
+    </button>
+  </div>
+  <app-imprint></app-imprint>
+</dialog>
+
+<dialog #legalModal>
+  <div class="dialog-headline">
+    <h1>Legal Notice</h1>
+    <button class="icon-button" (click)="chooseAction(Actions.legalNotice)">
+      &#10006;
+    </button>
+  </div>
+  <app-legal></app-legal>
+</dialog>
+
+@if (isMobile) {
+<button (click)="scrollToAnchor('editingSide')" class="floating-button up">
+  &#8963;
+</button>
+<button (click)="scrollToAnchor('previewSide')" class="floating-button down">
+  &#8963;
+</button>
+}

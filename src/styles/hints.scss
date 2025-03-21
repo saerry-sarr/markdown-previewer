@@ -1,0 +1,60 @@
+.hint-side {
+  position: relative;
+}
+
+.hint-side:not(.show) {
+  display: none;
+}
+
+.hint-side.show {
+  display: block;
+  position: fixed;
+  background-color: #b8ebe1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 2rem 2rem 2rem;
+  width: 35%;
+  overflow-y: auto;
+
+  section {
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 20px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  div.pane-toggle {
+    display: inline-flex;
+    position: sticky;
+    top: 0;
+    left: 100%;
+    background-color: #b8ebe1;
+    padding: 0.75rem 0 0.75rem 0.75rem;
+    border-radius: 20px 0 0 20px;
+    color: #44b277;
+    font-weight: bolder;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    &:hover {
+      span,
+      img {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+summary {
+  cursor: pointer;
+  @media (pointer: fine) {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}

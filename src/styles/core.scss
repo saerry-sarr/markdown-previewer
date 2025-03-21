@@ -13,8 +13,21 @@ body {
   --breakpoint-xl: 1440px;
 }
 
-body,
 html {
+  overscroll-behavior: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -28,9 +41,6 @@ html {
   overflow-wrap: break-word;
   hyphens: auto;
   overflow-x: hidden;
-}
-
-body {
   background-color: var(--background-color);
   padding: 2rem;
 }

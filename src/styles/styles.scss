@@ -1,7 +1,10 @@
-@import "core";
-@import "font";
-@import "layout";
-@import "highlight-js";
-@import "previewer";
+@use "core";
+@use "font";
+@use "buttons";
+@use "hints";
+@use "dialog";
+@use "layout";
+@use "highlight-js";
+@use "previewer";
 
 

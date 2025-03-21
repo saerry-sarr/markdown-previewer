@@ -19,11 +19,11 @@ export class DeviceService {
     return navigator.maxTouchPoints !== 0;
   }
 
-  public isMacintosh() {
+  public isMacintosh(): boolean {
     return navigator.userAgent.indexOf('Mac') > -1
   }
 
-  public isWindows() {
+  public isWindows(): boolean {
     return navigator.userAgent.indexOf('Win') > -1
   }
 }

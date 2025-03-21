@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +8,8 @@ export class SessionService {
   public sessionKey: string = '';
   public formInput: string | null = '';
   public sessionList = [];
-  private sessionPrefix = 'session-';
-  private sessionListKey = 'sessionList';
+  private readonly sessionPrefix = 'session-';
+  private readonly sessionListKey = 'sessionList';
 
   constructor(private readonly route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe((params: Params) => {
@@ -27,20 +26,6 @@ export class SessionService {
     });
   }
 
-  private initializeSession(sessionKey: string | undefined): void {
-    if (sessionKey) {
-      this.restoreSession(sessionKey);
-      return;
-    }
-    this.sessionKey = this.getSessionKey();
-    this.navigateToActiveSession(this.sessionKey);
-    this.storeSession('');
-  }
-
-  private getSessionKey(): string {
-    return this.generateRandomString(15);
-  }
-
   public restoreSession(sessionKey: string): void {
     if (!sessionKey) {
       return;
@@ -49,20 +34,38 @@ export class SessionService {
     this.navigateToActiveSession(sessionKey);
   }
 
-  public newSession() {
+  public newSession(): void {
     this.initializeSession(undefined);
+  }
+
+  public storeSession(sessionInput: string | null): void {
+    if (!this.sessionKey) {
+      return;
+    }
+    this.formInput = sessionInput ?? '';
+    localStorage.setItem(
+      this.sessionPrefix + this.sessionKey,
+      this.formInput ?? ''
+    );
+  }
+
+  public getSessionList(): string[] {
+    let sessionKeyList = localStorage.getItem(this.sessionListKey);
+    return sessionKeyList?.length ? JSON.parse(sessionKeyList) : [];
   }
 
   private navigateToActiveSession(sessionKey: string): void {
     this.router.navigate([], { queryParams: { sessionKey } });
   }
 
-  public storeSession(sessionInput: string | null): void {
-    this.formInput = sessionInput ?? '';
-    localStorage.setItem(
-      this.sessionPrefix + this.sessionKey,
-      this.formInput ?? ''
-    );
+  private initializeSession(sessionKey: string | undefined): void {
+    if (sessionKey) {
+      this.restoreSession(sessionKey);
+      return;
+    }
+    this.sessionKey = this.generateRandomString(15);
+    this.navigateToActiveSession(this.sessionKey);
+    this.storeSession('');
   }
 
   private generateRandomString(length: number): string {
@@ -77,7 +80,7 @@ export class SessionService {
     return result;
   }
 
-  private storeSessionList() {
+  private storeSessionList(): void {
     let sessionKeyList = localStorage.getItem(this.sessionListKey);
     if (!sessionKeyList?.length) {
       sessionKeyList = JSON.stringify([this.sessionKey]);
@@ -89,10 +92,5 @@ export class SessionService {
       ? parsedList
       : parsedList.push(this.sessionKey);
     localStorage.setItem(this.sessionListKey, JSON.stringify(parsedList));
-  }
-
-  public getSessionList() {
-    let sessionKeyList = localStorage.getItem(this.sessionListKey);
-    return sessionKeyList?.length ? JSON.parse(sessionKeyList) : [];
   }
 }
