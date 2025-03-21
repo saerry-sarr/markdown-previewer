@@ -18,16 +18,15 @@ import { ImprintComponent } from '../components/imprint/imprint.component';
 import { LegalComponent } from '../components/legal/legal.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    HintsComponent,
-    ImprintComponent,
-    LegalComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    imports: [
+        ReactiveFormsModule,
+        HintsComponent,
+        ImprintComponent,
+        LegalComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   @ViewChild('hintSide') public hintSide: ElementRef | undefined;
