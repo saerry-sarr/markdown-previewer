@@ -1,7 +1,10 @@
 <h4>How to Use Markdown</h4>
 
-<details name="hint" class="hint-heading">
-  <summary>Heading</summary>
+<details name="hint" #headingDetails class="hint-heading">
+  <summary (click)="flipChevron(heading, headingDetails)">
+    <b class="chevron" #heading>&#8963;</b>
+    <h5>Heading</h5>
+  </summary>
   <section>
     <p># Heading (h1)</p>
     <p>or</p>
@@ -18,11 +21,14 @@
   <section>### Heading (h3)</section>
   <section>#### Heading (h4)</section>
   <section>##### Heading (h5)</section>
-  <section>###### Heading (h6)</section>
+  <section>###### Heading (h5)</section>
 </details>
 
-<details name="hint" class="hint-emphasis">
-  <summary>Emphasis</summary>
+<details name="hint" #emphasisDetails class="hint-emphasis">
+  <summary (click)="flipChevron(emphasis, emphasisDetails)">
+    <b class="chevron" #emphasis>&#8963;</b>
+    <h5>Emphasis</h5>
+  </summary>
   <section>
     <p>**bold**</p>
     <p>or</p>
@@ -46,8 +52,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-blockquotes">
-  <summary>Blockquotes</summary>
+<details name="hint" #bqDetails class="hint-blockquotes">
+  <summary (click)="flipChevron(bq, bqDetails)">
+    <b class="chevron" #bq>&#8963;</b>
+    <h5>Blockquotes</h5>
+  </summary>
   <section>> Simple blockquote</section>
   <section>
     <p>> Multiple Line</p>
@@ -69,8 +78,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-ordered_lists">
-  <summary>Ordered Lists</summary>
+<details name="hint" #olDetails class="hint-ordered_lists">
+  <summary (click)="flipChevron(ol, olDetails)">
+    <b class="chevron" #ol>&#8963;</b>
+    <h5>Ordered Lists</h5>
+  </summary>
   <section>
     <p>1. Ordered List Item</p>
     <p>2. Ordered List Item</p>
@@ -99,8 +111,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-unordered_lists">
-  <summary>Unordered Lists</summary>
+<details name="hint" #ulDetails class="hint-unordered_lists">
+  <summary (click)="flipChevron(ul, ulDetails)">
+    <b class="chevron" #ul>&#8963;</b>
+    <h5>Unordered Lists</h5>
+  </summary>
   <section>
     <p>- Unordered List Item</p>
     <p>- Unordered List Item</p>
@@ -129,8 +144,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-mixed_lists">
-  <summary>Mixed Lists</summary>
+<details name="hint" #mlDetails class="hint-mixed_lists">
+  <summary (click)="flipChevron(ml, mlDetails)">
+    <b class="chevron" #ml>&#8963;</b>
+    <h5>Mixed Lists</h5>
+  </summary>
   <section>
     <p>- Unordered List Item</p>
     <p>- Unordered List Item</p>
@@ -157,8 +175,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-code">
-  <summary>Code</summary>
+<details name="hint" #codeDetails class="hint-code">
+  <summary (click)="flipChevron(code, codeDetails)">
+    <b class="chevron" #code>&#8963;</b>
+    <h5>Code</h5>
+  </summary>
   <section>Backticks for marking `code`.</section>
   <section>
     <p>```</p>
@@ -175,8 +196,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-horizontal_rules">
-  <summary>Horizontal Rulers</summary>
+<details name="hint" #hrDetails class="hint-horizontal_rules">
+  <summary (click)="flipChevron(hr, hrDetails)">
+    <b class="chevron" #hr>&#8963;</b>
+    <h5>Horizontal Rulers</h5>
+  </summary>
   <section>
     <p>***</p>
   </section>
@@ -188,8 +212,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-links">
-  <summary>Links</summary>
+<details name="hint" #linksDetails class="hint-links">
+  <summary (click)="flipChevron(links, linksDetails)">
+    <b class="chevron" #links>&#8963;</b>
+    <h5>Links</h5>
+  </summary>
   <section>
     <p>This is [an example](http://example.com/ "Title") inline link.</p>
   </section>
@@ -207,8 +234,11 @@
   </section>
 </details>
 
-<details name="hint" class="hint-images">
-  <summary>Images</summary>
+<details name="hint" #imagesDetails class="hint-images">
+  <summary (click)="flipChevron(images, imagesDetails)">
+    <b class="chevron" #images>&#8963;</b>
+    <h5>Images</h5>
+  </summary>
   <section>
     <p>![Image alt text](/path/to/img.jpg)</p>
   </section>
@@ -217,8 +247,11 @@
   <section><p>[id]: url/to/image "Optional title attribute"</p></section>
 </details>
 
-<details name="hint" class="hint-backslash_escapes">
-  <summary>Backslash Escapes</summary>
+<details name="hint" #beDetails class="hint-backslash_escapes">
+  <summary (click)="flipChevron(be, beDetails)">
+    <b class="chevron" #be>&#8963;</b>
+    <h5>Backslash Escapes</h5>
+  </summary>
   <section>
     <p>\*literal asterisks\*</p>
   </section>

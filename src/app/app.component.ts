@@ -18,15 +18,15 @@ import { ImprintComponent } from '../components/imprint/imprint.component';
 import { LegalComponent } from '../components/legal/legal.component';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        ReactiveFormsModule,
-        HintsComponent,
-        ImprintComponent,
-        LegalComponent,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+  selector: 'app-root',
+  imports: [
+    ReactiveFormsModule,
+    HintsComponent,
+    ImprintComponent,
+    LegalComponent,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   @ViewChild('hintSide') public hintSide: ElementRef | undefined;
@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
 
   private subscribeToSessionSelect(): void {
     this.sessionSelect.valueChanges.subscribe((value) => {
-      if (value) {
+      if (value && value !== this.sessionService.sessionKey) {
         this.sessionService.restoreSession(value);
       }
     });
@@ -152,6 +152,7 @@ export class AppComponent implements OnInit {
       this.userInput.setValue(this.sessionService.formInput);
       this.sessionList = this.sessionService.getSessionList();
       this.selectedIndex = this.getSelectedIndex(params['sessionKey']);
+      this.sessionSelect.setValue(params['sessionKey']);
     });
   }
 
