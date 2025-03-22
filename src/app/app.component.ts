@@ -2,6 +2,8 @@ import { Actions } from './../enums/footer-buttons.enum';
 import { SessionService } from '../services/session.service';
 import { DeviceService } from './../services/device.service';
 import {
+  ApplicationRef,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -45,6 +47,7 @@ export class AppComponent implements OnInit {
   public imprintModalOpen = false;
   public legalModalOpen = false;
   public Actions = Actions;
+  public changeDetector: ChangeDetectorRef;
 
   constructor(
     private readonly sanitizer: DomSanitizer,
@@ -52,6 +55,7 @@ export class AppComponent implements OnInit {
     private readonly sessionService: SessionService,
     private readonly route: ActivatedRoute
   ) {
+    this.changeDetector = inject(ChangeDetectorRef);
     this.subscribeToForm();
     this.subscribeToSessionSelect();
     this.subscribeToQueryParams();
@@ -116,6 +120,17 @@ export class AppComponent implements OnInit {
     }
   }
 
+  public updateTextArea() {
+    const textarea = document.getElementById(
+      'editing-textarea'
+    ) as HTMLTextAreaElement;
+    const preview = document.getElementById('preview') as HTMLSpanElement;
+    if (!textarea || !preview) {
+      return;
+    }
+    textarea.style.height = preview.getBoundingClientRect().height + 'px';
+  }
+
   private hideHintPanel(): void {
     this.hintSide?.nativeElement.classList.add('none');
   }
@@ -134,6 +149,7 @@ export class AppComponent implements OnInit {
       if (value && value !== this.sessionService.sessionKey) {
         this.sessionService.restoreSession(value);
       }
+      this.updateTextArea();
     });
   }
 
@@ -143,16 +159,24 @@ export class AppComponent implements OnInit {
         SecurityContext.HTML,
         md.render(input ?? '')
       );
+
       this.sessionService.storeSession(input ?? '');
+      setTimeout(() => {
+        this.updateTextArea();
+        this.changeDetector.detectChanges();
+      }, 100);
     });
   }
 
   private subscribeToQueryParams(): void {
     this.route.queryParams.subscribe((params) => {
-      this.userInput.setValue(this.sessionService.formInput);
+      this.userInput.setValue(this.sessionService.formInput, {
+        emitEvent: true,
+      });
       this.sessionList = this.sessionService.getSessionList();
       this.selectedIndex = this.getSelectedIndex(params['sessionKey']);
       this.sessionSelect.setValue(params['sessionKey']);
+      this.updateTextArea();
     });
   }
 

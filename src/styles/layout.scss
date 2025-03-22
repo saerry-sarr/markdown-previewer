@@ -23,7 +23,7 @@
     border: 1px solid var(--primary);
     resize: none;
     padding: 20px;
-    min-height: 70vh;
+    box-sizing: border-box;
   }
 
   .caption-wrapper {
