@@ -44,8 +44,14 @@
   grid-auto-flow: column;
   gap: 0.25rem;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
   margin-bottom: 1rem;
+
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .button-row-editing {
@@ -65,6 +71,17 @@
   padding: 0.5rem 2rem;
   text-wrap: nowrap;
 
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    span {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
   &-danger {
     @extend .button-settings;
     @extend .button;
@@ -76,5 +93,18 @@
     @extend .button;
     background-color: var(--secondary);
     color: black;
+  }
+
+  &-plain {
+    @extend .button-settings;
+    @extend .button;
+    background-color: unset;
+    color: black;
+
+    @media (pointer: fine) {
+      &:hover {
+        color: var(--primary);
+      }
+    }
   }
 }
